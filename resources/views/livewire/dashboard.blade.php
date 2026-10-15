@@ -1,0 +1,80 @@
+<div>
+    <!-- Barre de navigation -->
+    <nav class="bg-white shadow">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <h1 class="text-xl font-semibold text-gray-900">Parking ESTM</h1>
+                    <div class="hidden md:flex space-x-4">
+                        <a href="/dashboard" class="nav-link nav-link-active">Tableau de bord</a>
+                        <a href="/history" class="nav-link nav-link-inactive">Historique</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-700">Bonjour, {{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
+                    <form method="POST" action="{{ route('logout') }}" class="inline">
+                        @csrf
+                        <button type="submit" class="btn-danger">
+                            Déconnexion
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="glass-card p-6 rounded-lg">
+                    <h2 class="text-lg font-semibold text-indigo-900 mb-2">Total Places</h2>
+                    <p class="text-3xl font-bold text-indigo-800">{{ $parkingSlots->count() }}</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg">
+                    <h2 class="text-lg font-semibold text-indigo-900 mb-2">Places Libres</h2>
+                    <p class="text-3xl font-bold text-green-600">{{ $parkingSlots->where('status', 'available')->count() }}</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg">
+                    <h2 class="text-lg font-semibold text-indigo-900 mb-2">Places Occupées</h2>
+                    <p class="text-3xl font-bold text-red-600">{{ $parkingSlots->where('status', 'occupied')->count() }}</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg">
+                    <h2 class="text-lg font-semibold text-indigo-900 mb-2">Taux d'occupation</h2>
+                    <p class="text-3xl font-bold text-indigo-800">
+                        {{ $parkingSlots->count() > 0 
+                            ? round(($parkingSlots->where('status', 'occupied')->count() / $parkingSlots->count()) * 100)
+                            : 0 }}%
+                    </p>
+                </div>
+            </div>
+
+            <!-- État des places de parking -->
+            <div class="glass-card p-6 rounded-lg">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold text-indigo-900">État des places de parking</h2>
+                    <p class="text-sm text-indigo-600">🔄 Mise à jour automatique toutes les 5 secondes</p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    @foreach($parkingSlots as $slot)
+                    <div class="glass-card p-4 rounded-lg relative {{ $slot->status === 'available' ? 'bg-green-50/70 border-green-500' : 'bg-red-50/70 border-red-500' }} border-2">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $slot->slot_code }}</h3>
+                        <p class="text-sm font-medium {{ $slot->status === 'available' ? 'text-green-700' : 'text-red-700' }}">
+                            {{ $slot->status === 'available' ? 'Libre' : 'Occupée' }}
+                        </p>
+                        @if($slot->is_reserved)
+                        <p class="text-xs font-medium text-amber-700 mt-2">
+                            Réservée pour: {{ $slot->reserved_for }}
+                        </p>
+                        @endif
+                        <p class="text-xs text-gray-600 mt-1">
+                            Dernière détection: {{ $slot->last_detection ? $slot->last_detection->diffForHumans() : 'N/A' }}
+                        </p>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
