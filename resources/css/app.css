@@ -1,11 +1,38 @@
-@import 'background.css';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply font-sans leading-relaxed text-slate-800 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply tracking-tight;
+  }
+}
+
 /* Styles personnalisés pour le parking ESTM */
 @layer components {
+  .parking-background {
+    background-image:
+      linear-gradient(rgba(15, 23, 42, 0.3), rgba(15, 23, 42, 0.3)),
+      url('/images/parking-background.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  .surface-panel {
+    background-color: rgba(231, 222, 207, 0.94);
+  }
+
+  .surface-card {
+    background-color: rgba(242, 236, 225, 0.96);
+  }
+
   .parking-slot {
     @apply p-4 text-white rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105;
   }
@@ -27,19 +54,19 @@
   }
   
   .nav-link-active {
-    @apply text-gray-900 bg-gray-100;
+    @apply text-amber-900 bg-amber-100;
   }
   
   .nav-link-inactive {
-    @apply text-gray-500 hover:text-gray-700 hover:bg-gray-50;
+    @apply text-slate-300 hover:text-white hover:bg-slate-800;
   }
   
   .btn-primary {
-    @apply bg-parking-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200;
+    @apply bg-parking-primary hover:bg-amber-300 text-slate-900 font-semibold py-2 px-4 rounded transition-colors duration-200;
   }
   
-  .btn-danger {
-    @apply bg-parking-occupied hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200;
+  .btn-secondary {
+    @apply bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded transition-colors duration-200;
   }
   
   .status-badge {

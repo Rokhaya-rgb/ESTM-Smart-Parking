@@ -3,17 +3,17 @@
 @section('title', 'Inscription')
 
 @section('content')
-<div class="flex items-center justify-center min-h-screen bg-estm">
-    <div class="w-full max-w-md p-8 space-y-6 glass-card">
+<div class="parking-background flex items-center justify-center min-h-screen">
+    <div class="surface-panel w-full max-w-md p-8 space-y-6 rounded-lg shadow-xl">
         <div class="text-center">
-            <h2 class="text-3xl font-bold text-indigo-900">Parking ESTM</h2>
-            <p class="mt-2 text-sm text-indigo-800">Créez votre compte</p>
+            <h2 class="text-2xl font-semibold text-gray-900">Créer un compte</h2>
+            <p class="mt-2 text-sm text-gray-600">Renseignez vos informations pour accéder au tableau de bord.</p>
         </div>
         
         <form method="POST" action="{{ route('register') }}" class="space-y-6">
             @csrf
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <label for="first_name" class="form-label">Prénom</label>
                     <input id="first_name" type="text" class="form-input" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus placeholder="Prénom">
@@ -32,7 +32,7 @@
             </div>
 
             <div>
-                <label for="email" class="form-label">Adresse Email</label>
+                <label for="email" class="form-label">Adresse e-mail</label>
                 <input id="email" type="email" class="form-input" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="votre.email@estm.sn">
                 @error('email')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -61,8 +61,8 @@
         
         <div class="text-center">
             <p class="text-sm text-gray-600">
-                Déjà un compte? 
-                <a href="{{ route('login') }}" class="font-medium text-parking-primary hover:text-blue-700">Se connecter</a>
+                Déjà un compte ?
+                <a href="{{ route('login') }}" class="font-medium text-amber-800 hover:text-amber-900">Se connecter</a>
             </p>
         </div>
     </div>

@@ -8,11 +8,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Figtree', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       colors: {
         'parking': {
           'free': '#10b981',      // Vert pour places libres
           'occupied': '#ef4444',   // Rouge pour places occupées
-          'primary': '#3b82f6',    // Bleu pour éléments principaux
+          'primary': '#f3cf92',
           'warning': '#f59e0b',    // Orange pour alertes
         }
       },
