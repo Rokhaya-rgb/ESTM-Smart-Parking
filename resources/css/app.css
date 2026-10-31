@@ -3,8 +3,62 @@
 @tailwind utilities;
 
 @layer base {
+  /* Thème sombre (par défaut) */
+  :root,
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --fg: 255 255 255;
+    --page: 7 15 29;
+    --page-alt: 12 26 46;
+    --sand-50: 247 243 236;
+    --sand-100: 236 229 216;
+    --sand-300: 201 191 174;
+    --sand-500: 143 135 120;
+    --azure-200: 195 217 251;
+    --azure-300: 148 188 246;
+    --free: 95 201 160;
+    --occupied: 224 122 111;
+    --warning: 227 178 92;
+    /* Surfaces vitrées et voile sur la photo */
+    --surface: 12 26 46;
+    --surface-alpha: 0.66;
+    --nav-alpha: 0.72;
+    --veil-top: 0.55;
+    --veil-mid: 0.78;
+    --veil-bottom: 0.95;
+    --veil-center: 0.6;
+    --field: 18 37 63;
+    --shadow: 0 0 0;
+  }
+
+  /* Thème clair */
+  :root[data-theme='light'] {
+    color-scheme: light;
+    --fg: 12 26 46;
+    --page: 244 247 251;
+    --page-alt: 232 238 247;
+    --sand-50: 12 26 46;
+    --sand-100: 30 45 68;
+    --sand-300: 71 85 105;
+    --sand-500: 100 116 139;
+    --azure-200: 30 77 160;
+    --azure-300: 37 99 200;
+    --free: 21 128 92;
+    --occupied: 190 62 50;
+    --warning: 161 98 7;
+    --surface: 255 255 255;
+    --surface-alpha: 0.74;
+    --nav-alpha: 0.8;
+    --veil-top: 0.4;
+    --veil-mid: 0.68;
+    --veil-bottom: 0.92;
+    --veil-center: 0.62;
+    --field: 255 255 255;
+    --shadow: 12 26 46;
+  }
+
   body {
-    @apply font-sans leading-relaxed text-sand-100 antialiased bg-ink-950;
+    @apply font-sans leading-relaxed text-sand-100 antialiased bg-page;
   }
 
   h1,
@@ -21,15 +75,15 @@
 /* Styles personnalisés pour le parking ESTM */
 @layer components {
   /*
-   * Fond : façade de l'ESTM sous un voile bleu nuit. Le voile garde les tons
-   * clairs de la photo sous contrôle pour que les textes restent lisibles.
+   * Fond : façade de l'ESTM sous un voile aux couleurs du thème. Le voile garde
+   * les tons clairs de la photo sous contrôle pour que les textes restent lisibles.
    */
   .parking-background {
-    background-color: theme('colors.ink.950');
+    background-color: rgb(var(--page));
     background-image:
-      radial-gradient(ellipse 70% 55% at 50% 48%, rgba(7, 15, 29, 0.6) 0%, rgba(7, 15, 29, 0) 100%),
-      linear-gradient(180deg, rgba(7, 15, 29, 0.55) 0%, rgba(7, 15, 29, 0.78) 55%, rgba(7, 15, 29, 0.95) 100%),
-      linear-gradient(115deg, rgba(27, 53, 86, 0.5) 0%, rgba(7, 15, 29, 0) 60%),
+      radial-gradient(ellipse 70% 55% at 50% 48%, rgb(var(--page) / var(--veil-center)) 0%, rgb(var(--page) / 0) 100%),
+      linear-gradient(180deg, rgb(var(--page) / var(--veil-top)) 0%, rgb(var(--page) / var(--veil-mid)) 55%, rgb(var(--page) / var(--veil-bottom)) 100%),
+      linear-gradient(115deg, rgb(var(--page-alt) / 0.5) 0%, rgb(var(--page) / 0) 60%),
       url('/images/estm-facade.webp');
     background-position: center, center, center, center 30%;
     background-repeat: no-repeat;
@@ -44,33 +98,48 @@
 
   /* Surfaces vitrées : panneaux et cartes */
   .surface-panel {
-    background-color: rgba(12, 26, 46, 0.66);
-    border: 1px solid rgba(247, 243, 236, 0.08);
+    background-color: rgb(var(--surface) / var(--surface-alpha));
+    border: 1px solid rgb(var(--fg) / 0.1);
     -webkit-backdrop-filter: blur(18px) saturate(115%);
     backdrop-filter: blur(18px) saturate(115%);
-    box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 24px 48px -28px rgb(var(--shadow) / 0.45);
   }
 
   .surface-card {
-    background-color: rgba(247, 243, 236, 0.04);
-    border: 1px solid rgba(247, 243, 236, 0.08);
+    background-color: rgb(var(--fg) / 0.04);
+    border: 1px solid rgb(var(--fg) / 0.1);
     transition: border-color 200ms ease, background-color 200ms ease;
   }
 
   .surface-card:hover {
-    background-color: rgba(247, 243, 236, 0.07);
-    border-color: rgba(148, 188, 246, 0.35);
+    background-color: rgb(var(--fg) / 0.07);
+    border-color: rgb(var(--azure-300) / 0.45);
   }
 
   .app-nav {
-    background-color: rgba(7, 15, 29, 0.72);
-    border-bottom: 1px solid rgba(247, 243, 236, 0.08);
+    background-color: rgb(var(--page) / var(--nav-alpha));
+    border-bottom: 1px solid rgb(var(--fg) / 0.1);
     -webkit-backdrop-filter: blur(14px);
     backdrop-filter: blur(14px);
   }
 
   .eyebrow {
     @apply text-xs font-medium uppercase tracking-[0.22em] text-azure-300;
+  }
+
+  /* Bouton clair / sombre : l'icône affichée est celle du thème vers lequel on bascule */
+  .theme-toggle {
+    @apply inline-flex h-9 w-9 items-center justify-center rounded-lg border border-fg/15 text-sand-100 transition-colors duration-200 hover:bg-fg/10 hover:text-fg focus:outline-none focus-visible:ring-2 focus-visible:ring-azure-300;
+  }
+
+  .theme-toggle .icon-sun,
+  .theme-toggle .icon-moon {
+    display: none;
+  }
+
+  :root:not([data-theme='light']) .theme-toggle .icon-sun,
+  :root[data-theme='light'] .theme-toggle .icon-moon {
+    display: block;
   }
 
   .parking-slot {
@@ -98,19 +167,19 @@
   }
 
   .nav-link-inactive {
-    @apply text-sand-300 hover:text-white hover:bg-white/5;
+    @apply text-sand-300 hover:text-fg hover:bg-fg/5;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center bg-azure-400 hover:bg-azure-300 text-ink-950 font-semibold py-2.5 px-5 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-azure-300 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900;
+    @apply inline-flex items-center justify-center bg-azure-400 hover:bg-azure-300 text-ink-950 font-semibold py-2.5 px-5 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-azure-300 focus-visible:ring-offset-2 focus-visible:ring-offset-page;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center border border-white/15 text-sand-100 hover:bg-white/10 hover:text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+    @apply inline-flex items-center justify-center border border-fg/15 text-sand-100 hover:bg-fg/10 hover:text-fg font-medium py-2 px-4 rounded-lg transition-colors duration-200;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center border border-white/30 text-white hover:bg-white/10 font-semibold py-2.5 px-5 rounded-lg transition-colors duration-200;
+    @apply inline-flex items-center justify-center border border-fg/30 text-fg hover:bg-fg/10 font-semibold py-2.5 px-5 rounded-lg transition-colors duration-200;
   }
 
   .status-badge {
@@ -126,14 +195,14 @@
   }
 
   .form-input {
-    @apply block w-full px-3.5 py-2.5 mt-1.5 text-sand-50 placeholder-sand-500 bg-white/5 border border-white/15 rounded-lg focus:outline-none focus:border-azure-400 focus:ring-1 focus:ring-azure-400 sm:text-sm;
+    @apply block w-full px-3.5 py-2.5 mt-1.5 text-sand-50 placeholder-sand-500 bg-fg/5 border border-fg/15 rounded-lg focus:outline-none focus:border-azure-400 focus:ring-1 focus:ring-azure-400 sm:text-sm;
   }
 
   /* Évite le fond blanc imposé par l'autofill du navigateur */
   .form-input:-webkit-autofill {
-    -webkit-text-fill-color: theme('colors.sand.50');
-    -webkit-box-shadow: 0 0 0 1000px #12253f inset;
-    caret-color: theme('colors.sand.50');
+    -webkit-text-fill-color: rgb(var(--sand-50));
+    -webkit-box-shadow: 0 0 0 1000px rgb(var(--field)) inset;
+    caret-color: rgb(var(--sand-50));
   }
 
   .form-label {

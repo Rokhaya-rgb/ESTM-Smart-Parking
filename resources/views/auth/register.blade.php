@@ -3,9 +3,12 @@
 @section('title', 'Inscription')
 
 @section('content')
-<div class="parking-background flex items-center justify-center min-h-screen px-4 py-12">
+<div class="parking-background relative flex items-center justify-center min-h-screen px-4 py-12">
+    <div class="absolute right-4 top-4">
+        @include('partials.theme-toggle')
+    </div>
     <div class="w-full max-w-md">
-        <a href="/" class="mb-8 flex items-center justify-center gap-3 text-white">
+        <a href="/" class="mb-8 flex items-center justify-center gap-3 text-fg">
             <img src="/favicon.svg" alt="" class="w-7 h-7 rounded-md">
             <span class="font-display text-xl">Parking ESTM</span>
         </a>
@@ -13,7 +16,7 @@
         <div class="surface-panel p-8 space-y-6 rounded-2xl">
             <div>
                 <p class="eyebrow">Nouvel accès</p>
-                <h2 class="mt-2 font-display text-3xl text-white">Créer un compte</h2>
+                <h2 class="mt-2 font-display text-3xl text-fg">Créer un compte</h2>
                 <p class="mt-2 text-sm text-sand-300">Renseignez vos informations pour accéder au tableau de bord.</p>
             </div>
 
