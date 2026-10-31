@@ -3,66 +3,72 @@
 @section('title', 'Inscription')
 
 @section('content')
-<div class="parking-background flex items-center justify-center min-h-screen">
-    <div class="surface-panel w-full max-w-md p-8 space-y-6 rounded-lg shadow-xl">
-        <div class="text-center">
-            <h2 class="text-2xl font-semibold text-gray-900">Créer un compte</h2>
-            <p class="mt-2 text-sm text-gray-600">Renseignez vos informations pour accéder au tableau de bord.</p>
-        </div>
-        
-        <form method="POST" action="{{ route('register') }}" class="space-y-6">
-            @csrf
+<div class="parking-background flex items-center justify-center min-h-screen px-4 py-12">
+    <div class="w-full max-w-md">
+        <a href="/" class="mb-8 flex items-center justify-center gap-3 text-white">
+            <svg class="w-7 h-7 text-lagoon-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 4.5 6v5.5c0 4.7 3.1 8.7 7.5 10.5 4.4-1.8 7.5-5.8 7.5-10.5V6L12 3Z"></path>
+            </svg>
+            <span class="font-display text-xl">Parking ESTM</span>
+        </a>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="surface-panel p-8 space-y-6 rounded-2xl">
+            <div>
+                <p class="eyebrow">Nouvel accès</p>
+                <h2 class="mt-2 font-display text-3xl text-white">Créer un compte</h2>
+                <p class="mt-2 text-sm text-sand-300">Renseignez vos informations pour accéder au tableau de bord.</p>
+            </div>
+
+            <form method="POST" action="{{ route('register') }}" class="space-y-5">
+                @csrf
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="first_name" class="form-label">Prénom</label>
+                        <input id="first_name" type="text" class="form-input" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus placeholder="Prénom">
+                        @error('first_name')
+                            <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="last_name" class="form-label">Nom</label>
+                        <input id="last_name" type="text" class="form-input" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" placeholder="Nom">
+                        @error('last_name')
+                            <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
                 <div>
-                    <label for="first_name" class="form-label">Prénom</label>
-                    <input id="first_name" type="text" class="form-input" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus placeholder="Prénom">
-                    @error('first_name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <label for="email" class="form-label">Adresse e-mail</label>
+                    <input id="email" type="email" class="form-input" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="votre.email@estm.sn">
+                    @error('email')
+                        <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="last_name" class="form-label">Nom</label>
-                    <input id="last_name" type="text" class="form-input" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" placeholder="Nom">
-                    @error('last_name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input id="password" type="password" class="form-input" name="password" required autocomplete="new-password" placeholder="••••••••">
+                    @error('password')
+                        <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
 
-            <div>
-                <label for="email" class="form-label">Adresse e-mail</label>
-                <input id="email" type="email" class="form-input" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="votre.email@estm.sn">
-                @error('email')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label for="password-confirm" class="form-label">Confirmer le mot de passe</label>
+                    <input id="password-confirm" type="password" class="form-input" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••">
+                </div>
 
-            <div>
-                <label for="password" class="form-label">Mot de passe</label>
-                <input id="password" type="password" class="form-input" name="password" required autocomplete="new-password" placeholder="••••••••">
-                @error('password')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="password-confirm" class="form-label">Confirmer le mot de passe</label>
-                <input id="password-confirm" type="password" class="form-input" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••">
-            </div>
-
-            <div>
                 <button type="submit" class="btn-primary w-full">
                     S'inscrire
                 </button>
-            </div>
-        </form>
-        
-        <div class="text-center">
-            <p class="text-sm text-gray-600">
+            </form>
+
+            <p class="pt-2 text-center text-sm text-sand-300">
                 Déjà un compte ?
-                <a href="{{ route('login') }}" class="font-medium text-amber-800 hover:text-amber-900">Se connecter</a>
+                <a href="{{ route('login') }}" class="font-medium text-lagoon-300 hover:text-lagoon-200">Se connecter</a>
             </p>
         </div>
     </div>
