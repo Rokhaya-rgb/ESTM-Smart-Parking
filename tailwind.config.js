@@ -15,17 +15,17 @@ module.exports = {
       colors: {
         // Bleu nuit : fond et surfaces
         ink: {
-          950: '#08141b',
-          900: '#0d1f29',
-          800: '#132b38',
-          700: '#1b3b4c',
+          950: '#070f1d',
+          900: '#0c1a2e',
+          800: '#12253f',
+          700: '#1b3556',
         },
-        // Turquoise de la façade de l'ESTM : accent principal
-        lagoon: {
-          200: '#b5e4e0',
-          300: '#8fd6d0',
-          400: '#5cbfb8',
-          500: '#36a39f',
+        // Bleu de la façade de l'ESTM : accent principal
+        azure: {
+          200: '#c3d9fb',
+          300: '#94bcf6',
+          400: '#5f98ee',
+          500: '#3b78d8',
         },
         // Crème chaude : texte et filets
         sand: {
@@ -37,7 +37,7 @@ module.exports = {
         'parking': {
           'free': '#5fc9a0',       // Places libres
           'occupied': '#e07a6f',   // Places occupées
-          'primary': '#5cbfb8',
+          'primary': '#5f98ee',
           'warning': '#e3b25c',
         }
       },

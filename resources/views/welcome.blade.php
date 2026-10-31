@@ -20,7 +20,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <svg class="w-7 h-7 text-lagoon-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-7 h-7 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 4.5 6v5.5c0 4.7 3.1 8.7 7.5 10.5 4.4-1.8 7.5-5.8 7.5-10.5V6L12 3Z"></path>
                     </svg>
                     <span class="font-display text-xl text-white">Parking ESTM</span>
@@ -50,7 +50,7 @@
             <div>
                 <p class="eyebrow mb-6">École Supérieure de Technologie et de Management</p>
                 <h1 class="text-5xl md:text-7xl font-medium text-white mb-6 leading-[1.05]">
-                    Le parking de <span class="italic text-lagoon-300">l'ESTM</span>
+                    Le parking de <span class="italic text-azure-300">l'ESTM</span>
                 </h1>
                 <p class="text-lg md:text-xl text-sand-100 mb-12 max-w-2xl mx-auto leading-relaxed">
                     Consultez les places libres et occupées, puis retrouvez les derniers changements.
@@ -92,8 +92,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="surface-card p-8 rounded-2xl">
-                    <div class="bg-lagoon-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-lagoon-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-azure-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
@@ -104,8 +104,8 @@
                 </div>
 
                 <div class="surface-card p-8 rounded-2xl">
-                    <div class="bg-lagoon-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-lagoon-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-azure-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
@@ -116,8 +116,8 @@
                 </div>
 
                 <div class="surface-card p-8 rounded-2xl">
-                    <div class="bg-lagoon-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-6 h-6 text-lagoon-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="bg-azure-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2m16 0v-2a4 4 0 00-3-3.87M14 3.13a4 4 0 010 7.75M14 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
                     </div>
@@ -136,7 +136,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
                 <div>
                     <div class="flex items-center space-x-3 mb-3">
-                        <svg class="w-6 h-6 text-lagoon-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 4.5 6v5.5c0 4.7 3.1 8.7 7.5 10.5 4.4-1.8 7.5-5.8 7.5-10.5V6L12 3Z"></path>
                         </svg>
                         <span class="font-display text-lg">Parking ESTM</span>

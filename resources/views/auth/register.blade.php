@@ -6,7 +6,7 @@
 <div class="parking-background flex items-center justify-center min-h-screen px-4 py-12">
     <div class="w-full max-w-md">
         <a href="/" class="mb-8 flex items-center justify-center gap-3 text-white">
-            <svg class="w-7 h-7 text-lagoon-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-7 h-7 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 4.5 6v5.5c0 4.7 3.1 8.7 7.5 10.5 4.4-1.8 7.5-5.8 7.5-10.5V6L12 3Z"></path>
             </svg>
             <span class="font-display text-xl">Parking ESTM</span>
@@ -68,7 +68,7 @@
 
             <p class="pt-2 text-center text-sm text-sand-300">
                 Déjà un compte ?
-                <a href="{{ route('login') }}" class="font-medium text-lagoon-300 hover:text-lagoon-200">Se connecter</a>
+                <a href="{{ route('login') }}" class="font-medium text-azure-300 hover:text-azure-200">Se connecter</a>
             </p>
         </div>
     </div>

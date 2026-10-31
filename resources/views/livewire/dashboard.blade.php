@@ -48,7 +48,7 @@
                     <h3 class="font-sans text-sm font-medium text-sand-300 mb-3 tracking-normal">Taux d'occupation</h3>
                     <p class="font-display text-4xl text-white">{{ $occupancyRate }}%</p>
                     <div class="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/10">
-                        <div class="h-full rounded-full bg-lagoon-400" style="width: {{ $occupancyRate }}%"></div>
+                        <div class="h-full rounded-full bg-azure-400" style="width: {{ $occupancyRate }}%"></div>
                     </div>
                 </div>
             </div>
