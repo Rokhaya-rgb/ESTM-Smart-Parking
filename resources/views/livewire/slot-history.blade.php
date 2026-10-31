@@ -4,7 +4,10 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
                 <div class="flex flex-wrap items-center gap-x-8 gap-y-2">
-                    <a href="/" class="font-display text-xl text-fg">Parking ESTM</a>
+                    <a href="/" class="flex items-center gap-3 font-display text-xl text-fg">
+                        <img src="/favicon.svg" alt="" class="h-7 w-7 rounded-md">
+                        <span>Parking ESTM</span>
+                    </a>
                     <div class="flex space-x-1">
                         <a href="/dashboard" class="nav-link nav-link-inactive">Tableau de bord</a>
                         <a href="/history" class="nav-link nav-link-active">Historique</a>
