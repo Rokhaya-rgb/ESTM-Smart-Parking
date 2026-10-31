@@ -4,6 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ config('app.name', 'Parking ESTM') }}</title>
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -20,9 +23,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <svg class="w-7 h-7 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 4.5 6v5.5c0 4.7 3.1 8.7 7.5 10.5 4.4-1.8 7.5-5.8 7.5-10.5V6L12 3Z"></path>
-                    </svg>
+                    <img src="/favicon.svg" alt="" class="w-7 h-7 rounded-md">
                     <span class="font-display text-xl text-white">Parking ESTM</span>
                 </div>
 
@@ -136,9 +137,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
                 <div>
                     <div class="flex items-center space-x-3 mb-3">
-                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 4.5 6v5.5c0 4.7 3.1 8.7 7.5 10.5 4.4-1.8 7.5-5.8 7.5-10.5V6L12 3Z"></path>
-                        </svg>
+                        <img src="/favicon.svg" alt="" class="w-6 h-6 rounded-md">
                         <span class="font-display text-lg">Parking ESTM</span>
                     </div>
                     <p class="text-sm text-sand-300">Parking de l’École Supérieure de Technologie et de Management.</p>

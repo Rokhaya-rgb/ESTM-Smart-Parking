@@ -6,9 +6,7 @@
 <div class="parking-background flex items-center justify-center min-h-screen px-4 py-12">
     <div class="w-full max-w-md">
         <a href="/" class="mb-8 flex items-center justify-center gap-3 text-white">
-            <svg class="w-7 h-7 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3 4.5 6v5.5c0 4.7 3.1 8.7 7.5 10.5 4.4-1.8 7.5-5.8 7.5-10.5V6L12 3Z"></path>
-            </svg>
+            <img src="/favicon.svg" alt="" class="w-7 h-7 rounded-md">
             <span class="font-display text-xl">Parking ESTM</span>
         </a>
 
