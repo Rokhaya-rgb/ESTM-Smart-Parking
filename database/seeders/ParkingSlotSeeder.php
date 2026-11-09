@@ -12,12 +12,30 @@ class ParkingSlotSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = ['available', 'occupied'];
+        // Places réservées
+        \App\Models\ParkingSlot::create([
+            'slot_code' => 'DG-01',
+            'status' => 'available',
+            'last_detection' => now(),
+            'is_reserved' => true,
+            'reserved_for' => 'Directeur Général'
+        ]);
+
+        \App\Models\ParkingSlot::create([
+            'slot_code' => 'DE-01',
+            'status' => 'available',
+            'last_detection' => now(),
+            'is_reserved' => true,
+            'reserved_for' => 'Directeur des Études'
+        ]);
+
+        // Places standards
         for ($i = 1; $i <= 10; $i++) {
             \App\Models\ParkingSlot::create([
                 'slot_code' => 'A-' . str_pad($i, 2, '0', STR_PAD_LEFT),
-                'status' => $statuses[array_rand($statuses)],
+                'status' => 'available',
                 'last_detection' => now(),
+                'is_reserved' => false
             ]);
         }
     }

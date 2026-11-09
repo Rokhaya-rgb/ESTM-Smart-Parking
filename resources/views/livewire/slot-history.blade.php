@@ -1,20 +1,24 @@
-<div>
+<div class="parking-background min-h-screen">
     <!-- Barre de navigation -->
-    <nav class="bg-white shadow">
+    <nav class="app-nav sticky top-0 z-40">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center space-x-8">
-                    <h1 class="text-xl font-semibold text-gray-900">🚗 Parking ESTM</h1>
-                    <div class="hidden md:flex space-x-4">
+            <div class="flex flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between">
+                <div class="flex flex-wrap items-center gap-x-8 gap-y-2">
+                    <a href="/" class="flex items-center gap-3 font-display text-xl text-fg">
+                        <img src="/favicon.svg" alt="" class="h-7 w-7 rounded-md">
+                        <span>Parking ESTM</span>
+                    </a>
+                    <div class="flex space-x-1">
                         <a href="/dashboard" class="nav-link nav-link-inactive">Tableau de bord</a>
                         <a href="/history" class="nav-link nav-link-active">Historique</a>
                     </div>
                 </div>
-                <div class="flex items-center space-x-4">
-                    <span class="text-sm text-gray-700">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
+                <div class="flex items-center justify-between gap-3 sm:justify-end">
+                    @include('partials.theme-toggle')
+                    <span class="text-sm text-sand-300">{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</span>
                     <form method="POST" action="{{ route('logout') }}" class="inline">
                         @csrf
-                        <button type="submit" class="btn-danger">
+                        <button type="submit" class="btn-secondary">
                             Déconnexion
                         </button>
                     </form>
@@ -23,61 +27,61 @@
         </div>
     </nav>
 
-    <div class="py-6">
-        <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <h2 class="text-2xl font-semibold mb-4">Historique des événements</h2>
-                    
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="table-header">Place</th>
-                                    <th class="table-header">État précédent</th>
-                                    <th class="table-header">Nouvel état</th>
-                                    <th class="table-header">Source</th>
-                                    <th class="table-header">Date/Heure</th>
+    <div class="py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-8">
+                <p class="eyebrow">Journal</p>
+                <h2 class="mt-2 text-3xl sm:text-4xl text-fg">Historique</h2>
+                <p class="mt-2 text-sm text-sand-300">Les changements d’état enregistrés sur les places.</p>
+            </div>
+
+            <div class="surface-panel p-4 sm:p-8 rounded-2xl">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-fg/10">
+                        <thead>
+                            <tr>
+                                <th class="text-left text-xs font-medium text-sand-500 uppercase tracking-wider py-3 px-4">
+                                    Place
+                                </th>
+                                <th class="text-left text-xs font-medium text-sand-500 uppercase tracking-wider py-3 px-4">
+                                    État enregistré
+                                </th>
+                                <th class="text-left text-xs font-medium text-sand-500 uppercase tracking-wider py-3 px-4">
+                                    Date et heure
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-fg/5">
+                            @forelse($events as $event)
+                                <tr class="hover:bg-fg/5 transition-colors">
+                                    <td class="text-sm font-medium text-fg py-4 px-4">
+                                        {{ $event->parkingSlot->slot_code }}
+                                        @if($event->parkingSlot->is_reserved)
+                                            <span class="text-xs text-parking-warning ml-2">Réservée</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-sm py-4 px-4">
+                                        <span class="status-badge {{ $event->status_after === 'available' ? 'status-badge-free' : 'status-badge-occupied' }}">
+                                            {{ $event->status_after === 'available' ? 'Libre' : 'Occupée' }}
+                                        </span>
+                                    </td>
+                                    <td class="text-sm text-sand-300 py-4 px-4">
+                                        {{ $event->detected_at->format('d/m/Y H:i:s') }}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse ($events as $event)
-                                    <tr>
-                                        <td class="table-cell font-medium text-gray-900">
-                                            {{ $event->parkingSlot->slot_code }}
-                                        </td>
-                                        <td class="table-cell">
-                                            <span class="status-badge {{ $event->status_before === 'occupied' ? 'status-badge-occupied' : 'status-badge-free' }}">
-                                                {{ $event->status_before === 'occupied' ? 'Occupé' : 'Libre' }}
-                                            </span>
-                                        </td>
-                                        <td class="table-cell">
-                                            <span class="status-badge {{ $event->status_after === 'occupied' ? 'status-badge-occupied' : 'status-badge-free' }}">
-                                                {{ $event->status_after === 'occupied' ? 'Occupé' : 'Libre' }}
-                                            </span>
-                                        </td>
-                                        <td class="table-cell">
-                                            {{ $event->source }}
-                                        </td>
-                                        <td class="table-cell">
-                                            {{ $event->detected_at->format('d/m/Y H:i:s') }}
-                                            <div class="text-xs text-gray-400">{{ $event->detected_at->diffForHumans() }}</div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">
-                                            Aucun événement enregistré
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="mt-4">
-                        {{ $events->links() }}
-                    </div>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="py-8 text-center text-sm text-sand-300">
+                                        Aucun changement n’a encore été enregistré.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4">
+                    {{ $events->links() }}
                 </div>
             </div>
         </div>

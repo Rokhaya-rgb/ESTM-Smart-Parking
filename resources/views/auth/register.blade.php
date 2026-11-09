@@ -3,66 +3,73 @@
 @section('title', 'Inscription')
 
 @section('content')
-<div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-50 to-blue-100">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-xl">
-        <div class="text-center">
-            <h2 class="text-3xl font-bold text-gray-900">🚗 Parking ESTM</h2>
-            <p class="mt-2 text-sm text-gray-600">Créez votre compte</p>
-        </div>
-        
-        <form method="POST" action="{{ route('register') }}" class="space-y-6">
-            @csrf
+<div class="parking-background relative flex items-center justify-center min-h-screen px-4 py-12">
+    <div class="absolute right-4 top-4">
+        @include('partials.theme-toggle')
+    </div>
+    <div class="w-full max-w-md">
+        <a href="/" class="mb-8 flex items-center justify-center gap-3 text-fg">
+            <img src="/favicon.svg" alt="" class="w-7 h-7 rounded-md">
+            <span class="font-display text-xl">Parking ESTM</span>
+        </a>
 
-            <div class="grid grid-cols-2 gap-4">
+        <div class="surface-panel p-8 space-y-6 rounded-2xl">
+            <div>
+                <p class="eyebrow">Nouvel accès</p>
+                <h2 class="mt-2 font-display text-3xl text-fg">Créer un compte</h2>
+                <p class="mt-2 text-sm text-sand-300">Renseignez vos informations pour accéder au tableau de bord.</p>
+            </div>
+
+            <form method="POST" action="{{ route('register') }}" class="space-y-5">
+                @csrf
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="first_name" class="form-label">Prénom</label>
+                        <input id="first_name" type="text" class="form-input" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus placeholder="Prénom">
+                        @error('first_name')
+                            <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div>
+                        <label for="last_name" class="form-label">Nom</label>
+                        <input id="last_name" type="text" class="form-input" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" placeholder="Nom">
+                        @error('last_name')
+                            <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
                 <div>
-                    <label for="first_name" class="form-label">Prénom</label>
-                    <input id="first_name" type="text" class="form-input" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus placeholder="Prénom">
-                    @error('first_name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <label for="email" class="form-label">Adresse e-mail</label>
+                    <input id="email" type="email" class="form-input" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="votre.email@estm.sn">
+                    @error('email')
+                        <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div>
-                    <label for="last_name" class="form-label">Nom</label>
-                    <input id="last_name" type="text" class="form-input" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name" placeholder="Nom">
-                    @error('last_name')
-                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input id="password" type="password" class="form-input" name="password" required autocomplete="new-password" placeholder="••••••••">
+                    @error('password')
+                        <p class="mt-2 text-sm text-parking-occupied">{{ $message }}</p>
                     @enderror
                 </div>
-            </div>
 
-            <div>
-                <label for="email" class="form-label">Adresse Email</label>
-                <input id="email" type="email" class="form-input" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="votre.email@estm.sn">
-                @error('email')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
+                <div>
+                    <label for="password-confirm" class="form-label">Confirmer le mot de passe</label>
+                    <input id="password-confirm" type="password" class="form-input" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••">
+                </div>
 
-            <div>
-                <label for="password" class="form-label">Mot de passe</label>
-                <input id="password" type="password" class="form-input" name="password" required autocomplete="new-password" placeholder="••••••••">
-                @error('password')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
-
-            <div>
-                <label for="password-confirm" class="form-label">Confirmer le mot de passe</label>
-                <input id="password-confirm" type="password" class="form-input" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••">
-            </div>
-
-            <div>
                 <button type="submit" class="btn-primary w-full">
                     S'inscrire
                 </button>
-            </div>
-        </form>
-        
-        <div class="text-center">
-            <p class="text-sm text-gray-600">
-                Déjà un compte? 
-                <a href="{{ route('login') }}" class="font-medium text-parking-primary hover:text-blue-700">Se connecter</a>
+            </form>
+
+            <p class="pt-2 text-center text-sm text-sand-300">
+                Déjà un compte ?
+                <a href="{{ route('login') }}" class="font-medium text-azure-300 hover:text-azure-200">Se connecter</a>
             </p>
         </div>
     </div>

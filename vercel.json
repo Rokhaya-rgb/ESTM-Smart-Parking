@@ -1,0 +1,36 @@
+{
+    "version": 2,
+    "functions": {
+        "api/*.php": {
+            "runtime": "vercel-php@0.5.2"
+        }
+    },
+    "routes": [
+        {
+            "src": "/build/(.*)",
+            "dest": "/build/$1"
+        },
+        {
+            "src": "/favicon.ico",
+            "dest": "/favicon.ico"
+        },
+        {
+            "src": "/robots.txt",
+            "dest": "/robots.txt"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
+    ],
+    "env": {
+        "APP_NAME": "Parking ESTM",
+        "APP_ENV": "production",
+        "APP_DEBUG": "false",
+        "DB_CONNECTION": "sqlite",
+        "APP_KEY": "base64:i19g2cA+F8QVpnHpRy6ltwwE6Lg2gftm6BfKZsaNt58=",
+        "CACHE_DRIVER": "array",
+        "SESSION_DRIVER": "array",
+        "QUEUE_DRIVER": "sync"
+    }
+}

@@ -1,79 +1,46 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Parking ESTM') }} - Système de Gestion Intelligent</title>
-    
+    <title>{{ config('app.name', 'Parking ESTM') }}</title>
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
-    
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700|fraunces:400,500,600&display=swap" rel="stylesheet" />
+
+    @include('partials.theme-script')
+
     <!-- Styles et Scripts -->
-    <link href="{{ secure_asset('build/assets/app-BKqD6kw-.css') }}" rel="stylesheet">
-    <script src="{{ secure_asset('build/assets/app-DNxiirP_.js') }}" defer></script>
-    
-    <!-- Additional Styles -->
-    <style>
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .glass-effect {
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .animate-pulse-slow {
-            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        .text-shadow {
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-    </style>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans antialiased bg-gray-50 overflow-x-hidden">
-    
+<body class="font-sans antialiased bg-page overflow-x-hidden">
+
     <!-- Navigation Header -->
-    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect">
+    <nav class="app-nav fixed top-0 left-0 right-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
-                    <div class="bg-indigo-600 p-2 rounded-lg">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                    </div>
-                    <span class="text-xl font-bold text-gray-800">Parking ESTM</span>
+                    <img src="/favicon.svg" alt="" class="w-7 h-7 rounded-md">
+                    <span class="font-display text-xl text-fg">Parking ESTM</span>
                 </div>
 
                 <!-- Navigation Links -->
                 @if (Route::has('login'))
-                    <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        @include('partials.theme-toggle')
                         @auth
-                            <a href="{{ url('/dashboard') }}" 
-                               class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors duration-300 shadow-lg">
-                                Dashboard
+                            <a href="{{ url('/dashboard') }}" class="btn-secondary">
+                                Tableau de bord
                             </a>
                         @else
-                            <a href="{{ route('login') }}" 
-                               class="text-gray-700 hover:text-indigo-600 px-4 py-2 rounded-lg font-medium transition-colors duration-300">
+                            <a href="{{ route('login') }}" class="btn-secondary">
                                 Connexion
                             </a>
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" 
-                                   class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors duration-300 shadow-lg">
-                                    S'inscrire
-                                </a>
-                            @endif
                         @endauth
                     </div>
                 @endif
@@ -82,42 +49,30 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="gradient-bg min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <div class="absolute -top-40 -right-40 w-80 h-80 bg-white opacity-10 rounded-full animate-float"></div>
-            <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-white opacity-5 rounded-full animate-pulse-slow"></div>
-        </div>
-
+    <section class="parking-background min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="animate-fade-in">
-                <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 text-shadow">
-                    Parking <span class="text-yellow-300">Intelligent</span>
+            <div>
+                <p class="eyebrow mb-6">École Supérieure de Technologie et de Management</p>
+                <h1 class="text-5xl md:text-7xl font-medium text-fg mb-6 leading-[1.05]">
+                    Le parking de <span class="italic text-azure-300">l'ESTM</span>
                 </h1>
-                <p class="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-                    Système de gestion avancé pour l'École Supérieure de Technologie de Management
+                <p class="text-lg md:text-xl text-sand-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+                    Consultez les places libres et occupées, puis retrouvez les derniers changements.
                 </p>
-                <p class="text-lg text-blue-200 mb-12 max-w-2xl mx-auto">
-                    Surveillance en temps réel • Gestion intelligente • Interface moderne • API IoT intégrée
-                </p>
-                
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
                     @auth
-                        <a href="{{ url('/dashboard') }}" 
-                           class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl transform hover:scale-105">
-                            Accéder au Dashboard
+                        <a href="{{ url('/dashboard') }}" class="btn-primary px-8 py-3.5 text-base">
+                            Tableau de bord
                         </a>
-                        <a href="{{ url('/history') }}" 
-                           class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-all duration-300 shadow-xl">
-                            Voir l'Historique
+                        <a href="{{ url('/history') }}" class="btn-ghost px-8 py-3.5 text-base">
+                            Voir l’historique
                         </a>
                     @else
-                        <a href="{{ route('register') }}" 
-                           class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl transform hover:scale-105">
+                        <a href="{{ route('register') }}" class="btn-primary px-8 py-3.5 text-base">
                             Commencer
                         </a>
-                        <a href="#features" 
-                           class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-all duration-300 shadow-xl">
+                        <a href="#features" class="btn-ghost px-8 py-3.5 text-base">
                             Découvrir
                         </a>
                     @endauth
@@ -127,218 +82,79 @@
     </section>
 
     <!-- Features Section -->
-    <section id="features" class="py-20 bg-white">
+    <section id="features" class="py-24 bg-page-alt border-t border-fg/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                    Fonctionnalités <span class="text-indigo-600">Avancées</span>
+                <p class="eyebrow mb-4">En bref</p>
+                <h2 class="text-4xl md:text-5xl font-medium text-fg mb-4">
+                    Le parking, simplement
                 </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-                    Une solution complète pour la gestion moderne du stationnement universitaire
+                <p class="text-lg text-sand-300 max-w-2xl mx-auto">
+                    Les informations utiles pour trouver une place et suivre son état.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Feature 1: Dashboard Temps Réel -->
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-blue-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="surface-card p-8 rounded-2xl">
+                    <div class="bg-azure-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Dashboard Temps Réel</h3>
-                    <p class="text-gray-600 mb-4">
-                        Surveillance instantanée de toutes les places de parking avec mise à jour automatique toutes les 2 secondes.
+                    <h3 class="text-xl font-medium text-fg mb-3">État des places</h3>
+                    <p class="text-sand-300">
+                        Consultez les places libres et occupées depuis le tableau de bord, mis à jour automatiquement.
                     </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• Grille interactive des places</li>
-                        <li>• Statistiques en direct</li>
-                        <li>• Indicateurs visuels colorés</li>
-                    </ul>
                 </div>
 
-                <!-- Feature 2: Historique Détaillé -->
-                <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-green-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                <div class="surface-card p-8 rounded-2xl">
+                    <div class="bg-azure-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Historique Complet</h3>
-                    <p class="text-gray-600 mb-4">
-                        Suivi détaillé de tous les événements de stationnement avec pagination et filtres avancés.
+                    <h3 class="text-xl font-medium text-fg mb-3">Historique</h3>
+                    <p class="text-sand-300">
+                        Retrouvez les changements d’état enregistrés, avec la date et l’heure.
                     </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• Journaux d'événements</li>
-                        <li>• Recherche et filtrage</li>
-                        <li>• Export des données</li>
-                    </ul>
                 </div>
 
-                <!-- Feature 3: API ESP32 -->
-                <div class="bg-gradient-to-br from-purple-50 to-violet-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-purple-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                <div class="surface-card p-8 rounded-2xl">
+                    <div class="bg-azure-400/15 w-12 h-12 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-azure-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2m16 0v-2a4 4 0 00-3-3.87M14 3.13a4 4 0 010 7.75M14 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
                         </svg>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">API IoT Intégrée</h3>
-                    <p class="text-gray-600 mb-4">
-                        Interface REST complète pour l'intégration avec les capteurs ESP32 et autres dispositifs IoT.
+                    <h3 class="text-xl font-medium text-fg mb-3">Accès au service</h3>
+                    <p class="text-sand-300">
+                        Connectez-vous pour consulter le tableau de bord et les données du parking.
                     </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• Endpoints RESTful</li>
-                        <li>• Authentification sécurisée</li>
-                        <li>• Documentation API</li>
-                    </ul>
                 </div>
-
-                <!-- Feature 4: Authentification -->
-                <div class="bg-gradient-to-br from-orange-50 to-red-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-red-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Sécurité Avancée</h3>
-                    <p class="text-gray-600 mb-4">
-                        Système d'authentification robuste avec gestion des rôles et protection des données.
-                    </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• Connexion sécurisée</li>
-                        <li>• Gestion des sessions</li>
-                        <li>• Protection CSRF</li>
-                    </ul>
-                </div>
-
-                <!-- Feature 5: Interface Moderne -->
-                <div class="bg-gradient-to-br from-teal-50 to-cyan-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-teal-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Design Responsive</h3>
-                    <p class="text-gray-600 mb-4">
-                        Interface utilisateur moderne et intuitive, optimisée pour tous les appareils.
-                    </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• Design mobile-first</li>
-                        <li>• Animations fluides</li>
-                        <li>• UX optimisée</li>
-                    </ul>
-                </div>
-
-                <!-- Feature 6: Livewire -->
-                <div class="bg-gradient-to-br from-pink-50 to-rose-100 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                    <div class="bg-pink-600 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
-                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Interactivité Avancée</h3>
-                    <p class="text-gray-600 mb-4">
-                        Composants Livewire v3 pour une expérience utilisateur dynamique sans rechargement.
-                    </p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li>• Mise à jour en temps réel</li>
-                        <li>• Interactions fluides</li>
-                        <li>• Performance optimisée</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-    <!-- CTA Section -->
-    <section class="py-20 gradient-bg">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                Prêt à commencer ?
-            </h2>
-            <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-                Rejoignez l'ESTM dans sa démarche d'innovation technologique pour une gestion intelligente du stationnement.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                @auth
-                    <a href="{{ url('/dashboard') }}" 
-                       class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl transform hover:scale-105">
-                        Accéder au Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('register') }}" 
-                       class="bg-white text-indigo-600 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl transform hover:scale-105">
-                        S'inscrire gratuitement
-                    </a>
-                    <a href="{{ route('login') }}" 
-                       class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-indigo-600 transition-all duration-300 shadow-xl">
-                        Se connecter
-                    </a>
-                @endauth
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
+    <footer class="bg-page border-t border-fg/5 text-fg py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
                 <div>
-                    <div class="flex items-center space-x-3 mb-4">
-                        <div class="bg-indigo-600 p-2 rounded-lg">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                            </svg>
-                        </div>
-                        <span class="text-xl font-bold">Parking ESTM</span>
+                    <div class="flex items-center space-x-3 mb-3">
+                        <img src="/favicon.svg" alt="" class="w-6 h-6 rounded-md">
+                        <span class="font-display text-lg">Parking ESTM</span>
                     </div>
-                    <p class="text-gray-400 mb-4">
-                        Système de gestion intelligent pour le parking de l'École Supérieure de Technologie de Management.
-                    </p>
+                    <p class="text-sm text-sand-300">Parking de l’École Supérieure de Technologie et de Management.</p>
                 </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Fonctionnalités</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>Dashboard temps réel</li>
-                        <li>Historique des événements</li>
-                        <li>API IoT intégrée</li>
-                        <li>Interface responsive</li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Technologies</h3>
-                    <ul class="space-y-2 text-gray-400">
-                        <li>Laravel 11</li>
-                        <li>Livewire v3</li>
-                        <li>Tailwind CSS v3</li>
-                        <li>SQLite & ESP32</li>
-                    </ul>
-                </div>
+                @auth
+                    <a href="{{ url('/dashboard') }}" class="text-sm text-sand-300 hover:text-fg">Tableau de bord</a>
+                @else
+                    <a href="{{ route('login') }}" class="text-sm text-sand-300 hover:text-fg">Connexion</a>
+                @endauth
             </div>
-            
-            <hr class="border-gray-800 my-8">
-            
-            <div class="text-center text-gray-400">
-                <p>&copy; {{ date('Y') }} ESTM - École Supérieure de Technologie de Management. Tous droits réservés.</p>
-            </div>
+            <p class="mt-8 border-t border-fg/10 pt-5 text-sm text-sand-500">
+                &copy; {{ date('Y') }} ESTM
+            </p>
         </div>
     </footer>
-
-    <!-- Smooth Scrolling Script -->
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
 </body>
 </html>

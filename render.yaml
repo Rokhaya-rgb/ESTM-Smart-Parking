@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: parking-estm
+    env: docker
+    dockerfilePath: ./Dockerfile
+    region: frankfurt
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: APP_NAME
+        value: Parking ESTM
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        value: base64:i19g2cA+F8QVpnHpRy6ltwwE6Lg2gftm6BfKZsaNt58=
+      - key: APP_DEBUG
+        value: false
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: LOG_CHANNEL
+        value: stderr
+      - key: LOG_LEVEL
+        value: info

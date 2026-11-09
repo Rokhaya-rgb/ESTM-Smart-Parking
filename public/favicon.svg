@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Parking ESTM icon</title>
+  <desc id="desc">A cream letter P and smart sensor dot inside an azure rounded square on a deep navy background.</desc>
+  <rect width="512" height="512" rx="108" fill="#0C1A2E"/>
+  <rect x="49" y="49" width="414" height="414" rx="92" fill="none" stroke="#5F98EE" stroke-width="18"/>
+  <path d="M173 365V147h111c58 0 92 32 92 83s-34 83-92 83h-64" fill="none" stroke="#F7F3EC" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="358" cy="193" r="12" fill="#5F98EE"/>
+</svg>
