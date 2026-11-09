@@ -54,7 +54,6 @@ class MqttService
         try {
             foreach (['parking/slot/#', 'parking/total'] as $filter) {
                 $this->client->subscribe($filter, function ($topic, $message) {
-                    Log::debug("Received message on topic {$topic}: {$message}");
                     $this->handleMessage($topic, $message);
                 }, 0);
             }
