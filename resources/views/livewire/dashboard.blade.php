@@ -34,6 +34,15 @@
                 <h2 class="mt-2 text-3xl sm:text-4xl text-fg">Le parking en direct</h2>
             </div>
 
+            <!-- Maquette : connexion et véhicules comptés -->
+            <div class="mb-4 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-sand-300">
+                <span class="flex items-center gap-1.5">
+                    <span class="h-2 w-2 rounded-full {{ $esp32Online ? 'bg-parking-free' : 'bg-parking-occupied' }}"></span>
+                    Maquette {{ $esp32Online ? 'en ligne' : 'hors ligne' }}
+                </span>
+                <span>Véhicules dans le parking : <strong class="text-fg">{{ $vehicleCount ?? '—' }}</strong></span>
+            </div>
+
             <!-- Chiffres clés -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 <div class="surface-panel p-6 rounded-2xl">

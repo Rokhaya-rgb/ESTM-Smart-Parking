@@ -5,7 +5,7 @@ namespace App\Services;
 use PhpMqtt\Client\MqttClient;
 use PhpMqtt\Client\ConnectionSettings;
 use App\Models\ParkingSlot;
-use App\Events\ParkingSlotUpdated;
+use App\Models\ParkingMetric;
 use Illuminate\Support\Facades\Log;
 
 class MqttService
@@ -27,11 +27,19 @@ class MqttService
         try {
             $this->client = new MqttClient($this->host, $this->port, $this->clientId);
 
-            $connectionSettings = new ConnectionSettings();
-            $connectionSettings
-                ->setKeepAliveInterval(60)
-                ->setConnectTimeout(3)
+            // ConnectionSettings est immuable : chaque setter renvoie une copie,
+            // il faut donc réaffecter le résultat (sinon les identifiants sont perdus).
+            $connectionSettings = (new ConnectionSettings())
+                ->setKeepAliveInterval((int) config('mqtt.keep_alive', 60))
+                ->setConnectTimeout((int) config('mqtt.timeout', 5))
                 ->setUseTls(false);
+
+            $username = config('mqtt.username');
+            if ($username !== null && $username !== '') {
+                $connectionSettings = $connectionSettings
+                    ->setUsername($username)
+                    ->setPassword(config('mqtt.password'));
+            }
 
             $this->client->connect($connectionSettings, true);
             Log::info('Connected to MQTT broker at ' . $this->host);
@@ -44,10 +52,12 @@ class MqttService
     public function subscribe()
     {
         try {
-            $this->client->subscribe('parking/slot/#', function ($topic, $message) {
-                Log::info("Received message on topic {$topic}: {$message}");
-                $this->handleMessage($topic, $message);
-            }, 0);
+            foreach (['parking/slot/#', 'parking/total'] as $filter) {
+                $this->client->subscribe($filter, function ($topic, $message) {
+                    Log::debug("Received message on topic {$topic}: {$message}");
+                    $this->handleMessage($topic, $message);
+                }, 0);
+            }
 
             Log::info('Subscribed to MQTT topics');
         } catch (\Exception $e) {
@@ -59,27 +69,50 @@ class MqttService
     protected function handleMessage($topic, $message)
     {
         try {
+            // Signe de vie de la maquette (utilisé par le tableau de bord)
+            ParkingMetric::put('esp32_last_seen', now()->toIso8601String());
+
+            // Nombre de véhicules compté par les capteurs d'entrée/sortie
+            if ($topic === 'parking/total') {
+                ParkingMetric::put('vehicle_count', max(0, (int) trim($message)));
+                return;
+            }
+
             $slotCode = substr($topic, strrpos($topic, '/') + 1);
-            $status = strtolower($message) === 'occupied' ? 'occupied' : 'available';
+            $status = strtolower(trim($message)) === 'occupied' ? 'occupied' : 'available';
 
             $slot = ParkingSlot::where('slot_code', $slotCode)
                               ->where('has_sensor', true)
                               ->first();
 
             if ($slot) {
+                $before = $slot->status;
                 $slot->update([
                     'status' => $status,
                     'last_detection' => now()
                 ]);
 
-                event(new ParkingSlotUpdated($slot));
-                Log::info("Updated slot {$slotCode} status to {$status}");
+                // L'ESP32 republie l'état chaque seconde : on n'historise que les changements
+                if ($before !== $status) {
+                    $slot->slotEvents()->create([
+                        'status_before' => $before,
+                        'status_after' => $status,
+                        'detected_at' => now(),
+                        'source' => 'mqtt',
+                    ]);
+                    Log::info("Slot {$slotCode}: {$before} -> {$status}");
+                }
             } else {
                 Log::warning("Slot {$slotCode} not found or does not have a sensor");
             }
         } catch (\Exception $e) {
             Log::error('Error handling MQTT message: ' . $e->getMessage());
         }
+    }
+
+    public function loop(): void
+    {
+        $this->client->loop(true);
     }
 
     public function getClient()

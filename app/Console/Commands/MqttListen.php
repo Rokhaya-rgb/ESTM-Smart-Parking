@@ -30,19 +30,21 @@ class MqttListen extends Command
     {
         $this->info('Starting MQTT listener...');
 
-        try {
-            $mqtt->connect();
-            $this->info('Connected to MQTT broker');
+        // Boucle de reconnexion : si le broker redémarre ou coupe, on réessaie au lieu de quitter.
+        while (true) {
+            try {
+                $mqtt->connect();
+                $this->info('Connected to MQTT broker');
 
-            $mqtt->subscribe();
-            $this->info('Subscribed to topics');
+                $mqtt->subscribe();
+                $this->info('Subscribed to topics');
 
-            // Méthode recommandée : bloquante
-            $mqtt->getClient()->loop(true);
-
-        } catch (\Exception $e) {
-            $this->error('MQTT Error: ' . $e->getMessage());
-            return 0;
+                $mqtt->loop();
+            } catch (\Throwable $e) {
+                $this->error('MQTT Error: ' . $e->getMessage());
+                $this->warn('Nouvelle tentative dans 5 secondes...');
+                sleep(5);
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\ParkingMetric;
 use App\Models\ParkingSlot;
 use Livewire\Component;
 
@@ -11,6 +12,12 @@ class Dashboard extends Component
     {
         // Rafraîchissement automatique toutes les 5 secondes
         $this->js('setInterval(() => { $wire.$refresh() }, 5000);');
+    }
+
+    protected function esp32Online(): bool
+    {
+        $seen = ParkingMetric::read('esp32_last_seen');
+        return $seen && now()->diffInSeconds(\Carbon\Carbon::parse($seen), true) <= 15;
     }
 
     public function render()
@@ -25,6 +32,8 @@ class Dashboard extends Component
             'totalSlots' => $totalSlots,
             'occupiedSlots' => $occupiedSlots,
             'availableSlots' => $availableSlots,
+            'vehicleCount' => ParkingMetric::read('vehicle_count'),
+            'esp32Online' => $this->esp32Online(),
             'occupancyRate' => $totalSlots > 0 ? round(($occupiedSlots / $totalSlots) * 100) : 0
         ])->layout('layouts.app');
     }

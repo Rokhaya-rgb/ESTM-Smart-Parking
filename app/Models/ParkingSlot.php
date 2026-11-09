@@ -21,6 +21,6 @@ class ParkingSlot extends Model
 
     public function slotEvents()
     {
-        return $this->hasMany(SlotEvent::class);
+        return $this->hasMany(SlotEvent::class, 'slot_id');
     }
 }
