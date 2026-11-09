@@ -70,7 +70,7 @@
             <div class="surface-panel p-6 sm:p-8 rounded-2xl">
                 <div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between mb-6">
                     <h2 class="text-2xl text-fg">Places du parking</h2>
-                    <p class="text-sm text-sand-500">Actualisé toutes les 5 secondes</p>
+                    <p class="text-sm text-sand-500">Actualisé toutes les 2 secondes</p>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">

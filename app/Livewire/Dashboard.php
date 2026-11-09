@@ -11,7 +11,7 @@ class Dashboard extends Component
     public function mount()
     {
         // Rafraîchissement automatique toutes les 5 secondes
-        $this->js('setInterval(() => { $wire.$refresh() }, 5000);');
+        $this->js('setInterval(() => { $wire.$refresh() }, 2000);');
     }
 
     protected function esp32Online(): bool
