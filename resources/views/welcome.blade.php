@@ -50,17 +50,25 @@
 
     <!-- Hero Section -->
     <section class="parking-background min-h-screen flex items-center justify-center relative overflow-hidden pt-16">
+        <div class="glow-blob animate-float-glow -left-24 top-1/4 h-80 w-80 bg-azure-500/25"></div>
+        <div class="glow-blob animate-float-glow -right-24 bottom-1/4 h-96 w-96 bg-parking-free/15" style="animation-delay: -4s"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div>
-                <p class="eyebrow mb-6">École Supérieure de Technologie et de Management</p>
-                <h1 class="text-5xl md:text-7xl font-medium text-fg mb-6 leading-[1.05]">
+                <p class="eyebrow mb-6 animate-fade-up">Parking intelligent</p>
+                <h1 class="animate-fade-up delay-1 text-5xl md:text-7xl font-medium text-fg mb-6 leading-[1.05]">
                     Le parking de <span class="italic text-azure-300">l'ESTM</span>
                 </h1>
-                <p class="text-lg md:text-xl text-sand-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+                <p class="animate-fade-up delay-2 text-lg md:text-xl text-sand-100 mb-8 max-w-2xl mx-auto leading-relaxed">
                     Consultez les places libres et occupées, puis retrouvez les derniers changements.
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <div class="animate-fade-up delay-3 mb-10 flex flex-wrap items-center justify-center gap-3">
+                    <span class="hero-stat"><span class="h-2 w-2 rounded-full bg-parking-free"></span><strong class="text-fg">{{ $availableSlots }}</strong> places libres</span>
+                    <span class="hero-stat"><span class="h-2 w-2 rounded-full bg-parking-occupied"></span><strong class="text-fg">{{ $occupiedSlots }}</strong> occupées</span>
+                    <span class="hero-stat">sur <strong class="text-fg">{{ $totalSlots }}</strong> places</span>
+                </div>
+
+                <div class="animate-fade-up delay-4 flex flex-col sm:flex-row gap-3 justify-center">
                     @auth
                         <a href="{{ url('/dashboard') }}" class="btn-primary px-8 py-3.5 text-base">
                             Tableau de bord
@@ -129,6 +137,38 @@
                     <p class="text-sand-300">
                         Connectez-vous pour consulter le tableau de bord et les données du parking.
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment ça marche -->
+    <section class="relative overflow-hidden bg-page py-24 border-t border-fg/5">
+        <div class="glow-blob left-1/2 top-0 h-72 w-[36rem] -translate-x-1/2 bg-azure-500/10"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-14">
+                <p class="eyebrow mb-4">Du terrain à l'écran</p>
+                <h2 class="text-4xl md:text-5xl font-medium text-fg mb-4">Une maquette connectée</h2>
+                <p class="text-lg text-sand-300 max-w-2xl mx-auto">
+                    Les capteurs de la maquette envoient leurs mesures en temps réel jusqu'à ce tableau de bord.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="surface-panel rounded-2xl p-8">
+                    <div class="step-number mb-5">1</div>
+                    <h3 class="text-xl font-medium text-fg mb-2">Détection</h3>
+                    <p class="text-sand-300">Des capteurs infrarouges repèrent chaque véhicule garé, et des capteurs à l'entrée et à la sortie comptent les passages.</p>
+                </div>
+                <div class="surface-panel rounded-2xl p-8">
+                    <div class="step-number mb-5">2</div>
+                    <h3 class="text-xl font-medium text-fg mb-2">Transmission</h3>
+                    <p class="text-sand-300">Un ESP32 publie ces informations par Wi-Fi vers un serveur MQTT, plusieurs fois par seconde.</p>
+                </div>
+                <div class="surface-panel rounded-2xl p-8">
+                    <div class="step-number mb-5">3</div>
+                    <h3 class="text-xl font-medium text-fg mb-2">Affichage</h3>
+                    <p class="text-sand-300">L'application enregistre chaque changement et met le tableau de bord à jour automatiquement.</p>
                 </div>
             </div>
         </div>

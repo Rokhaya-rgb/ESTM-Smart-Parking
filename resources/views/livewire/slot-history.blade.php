@@ -1,4 +1,4 @@
-<div class="parking-background min-h-screen">
+<div class="parking-background min-h-screen" wire:poll.3s>
     <!-- Barre de navigation -->
     <nav class="app-nav sticky top-0 z-40">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -44,7 +44,10 @@
                                     Place
                                 </th>
                                 <th class="text-left text-xs font-medium text-sand-500 uppercase tracking-wider py-3 px-4">
-                                    État enregistré
+                                    Changement
+                                </th>
+                                <th class="text-left text-xs font-medium text-sand-500 uppercase tracking-wider py-3 px-4">
+                                    Source
                                 </th>
                                 <th class="text-left text-xs font-medium text-sand-500 uppercase tracking-wider py-3 px-4">
                                     Date et heure
@@ -53,26 +56,40 @@
                         </thead>
                         <tbody class="divide-y divide-fg/5">
                             @forelse($events as $event)
+                                @php
+                                    $before = $event->status_before === 'available';
+                                    $after = $event->status_after === 'available';
+                                @endphp
                                 <tr class="hover:bg-fg/5 transition-colors">
-                                    <td class="text-sm font-medium text-fg py-4 px-4">
-                                        {{ $event->parkingSlot->slot_code }}
+                                    <td class="py-4 px-4">
+                                        <span class="slot-chip">{{ $event->parkingSlot->slot_code }}</span>
                                         @if($event->parkingSlot->is_reserved)
-                                            <span class="text-xs text-parking-warning ml-2">Réservée</span>
+                                            <span class="ml-2 text-xs text-parking-warning">Réservée</span>
                                         @endif
                                     </td>
                                     <td class="text-sm py-4 px-4">
-                                        <span class="status-badge {{ $event->status_after === 'available' ? 'status-badge-free' : 'status-badge-occupied' }}">
-                                            {{ $event->status_after === 'available' ? 'Libre' : 'Occupée' }}
-                                        </span>
+                                        <div class="flex items-center gap-2">
+                                            <span class="status-badge {{ $before ? 'status-badge-free' : 'status-badge-occupied' }} opacity-70">{{ $before ? 'Libre' : 'Occupée' }}</span>
+                                            <svg class="h-4 w-4 text-sand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                                            <span class="status-badge {{ $after ? 'status-badge-free' : 'status-badge-occupied' }}">{{ $after ? 'Libre' : 'Occupée' }}</span>
+                                        </div>
                                     </td>
                                     <td class="text-sm text-sand-300 py-4 px-4">
-                                        {{ $event->detected_at->format('d/m/Y H:i:s') }}
+                                        {{ $event->source === 'mqtt' ? 'Capteur (maquette)' : ucfirst($event->source) }}
+                                    </td>
+                                    <td class="text-sm text-sand-300 py-4 px-4">
+                                        <span class="text-fg">{{ $event->detected_at->format('d/m/Y H:i:s') }}</span>
+                                        <span class="ml-2 text-xs text-sand-500">{{ $event->detected_at->diffForHumans() }}</span>
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="py-8 text-center text-sm text-sand-300">
-                                        Aucun changement n’a encore été enregistré.
+                                    <td colspan="4" class="py-14 text-center">
+                                        <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-azure-400/15 text-azure-300">
+                                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"/></svg>
+                                        </div>
+                                        <p class="text-sm text-sand-300">Aucun changement n’a encore été enregistré.</p>
+                                        <p class="mt-1 text-xs text-sand-500">Ils apparaîtront ici dès qu’un véhicule se gare ou quitte une place.</p>
                                     </td>
                                 </tr>
                             @endforelse

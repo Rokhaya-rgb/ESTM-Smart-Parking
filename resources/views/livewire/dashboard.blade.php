@@ -121,13 +121,13 @@
                         </p>
                         @endif
 
-                        <p class="mt-3 text-[11px] text-sand-500" title="{{ $slot->last_detection ? $slot->last_detection->format('d/m/Y à H:i:s') : '' }}">
-                            @if($slot->last_detection)
-                                {{ $slot->has_sensor ? 'Détecté' : 'Mis à jour' }} {{ $slot->last_detection->diffForHumans() }}
-                            @else
-                                Aucune donnée
-                            @endif
+                        {{-- Seules les places équipées d'un capteur ont une détection réelle à afficher --}}
+                        @if($slot->has_sensor && $slot->last_detection)
+                        <p class="mt-3 flex items-center gap-1.5 text-[11px] text-sand-500" title="{{ $slot->last_detection->format('d/m/Y à H:i:s') }}">
+                            <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z"/></svg>
+                            {{ $slot->last_detection->diffForHumans() }}
                         </p>
+                        @endif
                     </div>
                     @empty
                     <p class="col-span-full py-8 text-center text-sm text-sand-300">

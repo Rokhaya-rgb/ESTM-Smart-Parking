@@ -4,11 +4,20 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Livewire\Dashboard;
+use App\Models\ParkingSlot;
 use App\Livewire\SlotHistory;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $slots = ParkingSlot::all();
+    $total = $slots->count();
+    $occupied = $slots->where('status', 'occupied')->count();
+
+    return view('welcome', [
+        'totalSlots' => $total,
+        'occupiedSlots' => $occupied,
+        'availableSlots' => $total - $occupied,
+    ]);
 });
 
 Route::get('/dashboard', Dashboard::class)->middleware('auth');

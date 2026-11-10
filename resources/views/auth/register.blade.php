@@ -13,8 +13,11 @@
             <span class="font-display text-xl">Parking ESTM</span>
         </a>
 
-        <div class="surface-panel p-8 space-y-6 rounded-2xl">
+        <div class="surface-panel animate-fade-up p-8 space-y-6 rounded-2xl">
             <div>
+                <div class="auth-badge">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7"><path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m1.5-1.5h-3m-6.375 3a4.125 4.125 0 1 0 0-8.25 4.125 4.125 0 0 0 0 8.25ZM3.001 19.235v-.003a7.125 7.125 0 0 1 14.248 0v.003A12.318 12.318 0 0 1 10.125 21.75c-2.642 0-5.114-.743-7.124-2.515Z"/></svg>
+                </div>
                 <p class="eyebrow">Nouvel accès</p>
                 <h2 class="mt-2 font-display text-3xl text-fg">Créer un compte</h2>
                 <p class="mt-2 text-sm text-sand-300">Renseignez vos informations pour accéder au tableau de bord.</p>
