@@ -75,7 +75,7 @@
                                         </div>
                                     </td>
                                     <td class="text-sm text-sand-300 py-4 px-4">
-                                        {{ $event->source === 'mqtt' ? 'Capteur (maquette)' : ucfirst($event->source) }}
+                                        {{ in_array($event->source, ['mqtt', 'simulation']) ? 'Capteur (maquette)' : ucfirst($event->source) }}
                                     </td>
                                     <td class="text-sm text-sand-300 py-4 px-4">
                                         <span class="text-fg">{{ $event->detected_at->format('d/m/Y H:i:s') }}</span>

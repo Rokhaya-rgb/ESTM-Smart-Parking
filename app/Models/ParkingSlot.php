@@ -11,7 +11,8 @@ class ParkingSlot extends Model
         'status',
         'last_detection',
         'is_reserved',
-        'reserved_for'
+        'reserved_for',
+        'has_sensor'
     ];
 
     protected $casts = [
