@@ -50,10 +50,10 @@
     --surface: 255 255 255;
     --surface-alpha: 0.93;
     --nav-alpha: 0.92;
-    --veil-top: 0.72;
-    --veil-mid: 0.82;
-    --veil-bottom: 0.95;
-    --veil-center: 0.88;
+    --veil-top: 0.42;
+    --veil-mid: 0.34;
+    --veil-bottom: 0.7;
+    --veil-center: 0.62;
     --field: 255 255 255;
     --shadow: 12 26 46;
   }
@@ -356,4 +356,9 @@ html { scrollbar-color: rgb(var(--fg) / 0.25) transparent; }
 :root[data-theme='light'] .slot-chip {
   background-color: #fff;
   border-color: rgb(var(--fg) / 0.28);
+}
+
+/* Thème clair : halo clair derrière les textes posés directement sur la photo */
+:root[data-theme='light'] .on-photo {
+  text-shadow: 0 0 10px rgb(var(--page) / 0.95), 0 0 3px rgb(var(--page) / 0.9), 0 0 1px rgb(var(--page));
 }

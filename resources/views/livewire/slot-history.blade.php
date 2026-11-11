@@ -29,7 +29,7 @@
 
     <div class="py-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-8">
+            <div class="mb-8 on-photo">
                 <p class="eyebrow">Journal</p>
                 <h2 class="mt-2 text-3xl sm:text-4xl text-fg">Historique</h2>
                 <p class="mt-2 text-sm text-sand-300">Les changements d’état enregistrés sur les places.</p>

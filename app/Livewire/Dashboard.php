@@ -11,7 +11,7 @@ class Dashboard extends Component
     protected function esp32Online(): bool
     {
         $seen = ParkingMetric::read('esp32_last_seen');
-        return $seen && now()->diffInSeconds(\Carbon\Carbon::parse($seen), true) <= 15;
+        return $seen && now()->diffInSeconds(\Carbon\Carbon::parse($seen), true) <= 40; // l'ESP32 se tait ~20 s pendant le cycle de la barrière
     }
 
     public function render()

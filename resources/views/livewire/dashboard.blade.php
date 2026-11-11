@@ -35,7 +35,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- En-tête : titre + état de la maquette -->
             <div class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <div>
+                <div class="on-photo">
                     <p class="eyebrow">Vue d'ensemble</p>
                     <h2 class="mt-2 text-3xl sm:text-4xl text-fg">Le parking en direct</h2>
                     <p class="mt-2 text-sm text-sand-300">{{ $totalSlots }} places au total, mises à jour automatiquement.</p>

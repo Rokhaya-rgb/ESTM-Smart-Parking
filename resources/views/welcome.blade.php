@@ -54,7 +54,6 @@
         <div class="glow-blob animate-float-glow -right-24 bottom-1/4 h-96 w-96 bg-parking-free/15" style="animation-delay: -4s"></div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div>
-                <p class="eyebrow mb-6 animate-fade-up">Parking intelligent</p>
                 <h1 class="animate-fade-up delay-1 text-5xl md:text-7xl font-medium text-fg mb-6 leading-[1.05]">
                     Le parking de <span class="italic text-azure-300">l'ESTM</span>
                 </h1>
