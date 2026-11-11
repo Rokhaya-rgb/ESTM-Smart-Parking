@@ -281,7 +281,7 @@
 }
 
 @layer utilities {
-  .animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .animate-fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
   .animate-float-glow { animation: float-glow 9s ease-in-out infinite; }
   .delay-1 { animation-delay: 0.08s; }
   .delay-2 { animation-delay: 0.16s; }
@@ -362,3 +362,237 @@ html { scrollbar-color: rgb(var(--fg) / 0.25) transparent; }
 :root[data-theme='light'] .on-photo {
   text-shadow: 0 0 10px rgb(var(--page) / 0.95), 0 0 3px rgb(var(--page) / 0.9), 0 0 1px rgb(var(--page));
 }
+
+/* =====================================================================
+   Animations
+   ===================================================================== */
+
+@keyframes pop-in {
+  0%   { opacity: 0.5; transform: scale(0.9) translateY(10px); }
+  60%  { opacity: 1; transform: scale(1.03) translateY(-2px); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes grow-x {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+  50%      { box-shadow: 0 0 0 5px transparent; opacity: 0.75; }
+}
+
+@keyframes dash-flow {
+  to { background-position: 28px 0; }
+}
+
+@keyframes dash-road {
+  to { stroke-dashoffset: -52; }
+}
+
+@layer utilities {
+  .animate-pop { animation: pop-in 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) backwards; }
+  .animate-grow { transform-origin: left center; animation: grow-x 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards; }
+  .dot-live { animation: breathe 2.4s ease-in-out infinite; }
+  .delay-5 { animation-delay: 0.4s; }
+}
+
+/* Titre qui scintille doucement (accent bleu de la façade) */
+.text-shimmer {
+  background-image: linear-gradient(100deg, rgb(var(--azure-300)) 25%, rgb(var(--azure-200)) 45%, rgb(var(--azure-300)) 65%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Apparition au défilement (activée seulement quand le JavaScript tourne) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--d, 0s);
+}
+
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Halo qui suit la souris */
+.spot {
+  position: relative;
+  overflow: hidden;
+}
+
+.spot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgb(var(--azure-300) / 0.2), transparent 65%);
+}
+
+.spot:hover::after { opacity: 1; }
+
+/* Barre de navigation : ombre au défilement, liens qui s'illuminent */
+.app-nav { transition: box-shadow 0.3s ease, background-color 0.3s ease; }
+.app-nav.scrolled { box-shadow: 0 14px 34px -20px rgb(var(--shadow) / 0.6); }
+
+.nav-link { position: relative; }
+.nav-link:hover { transform: translateY(-1px); }
+
+/* Boutons : reflet qui traverse au survol */
+.btn-primary { position: relative; overflow: hidden; }
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.38) 50%, transparent 70%);
+  transform: translateX(-130%);
+  pointer-events: none;
+}
+.btn-primary:hover::after { transform: translateX(130%); transition: transform 0.9s ease; }
+.btn-primary:active { transform: translateY(1px) scale(0.99); }
+
+.btn-secondary, .btn-ghost { transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease; }
+.btn-secondary:hover, .btn-ghost:hover { transform: translateY(-1px); }
+
+/* Champs : halo à la prise de focus */
+.form-input { transition: border-color 0.2s ease, box-shadow 0.25s ease, background-color 0.2s ease; }
+.form-input:focus { box-shadow: 0 0 0 4px rgb(95 152 238 / 0.22); }
+
+/* Cartes de la page d'accueil */
+.surface-card { transition: transform 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease; }
+.surface-card:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -26px rgb(var(--shadow) / 0.6); }
+
+.kpi:hover { box-shadow: 0 26px 46px -26px rgb(var(--shadow) / 0.65); }
+
+/* Chaîne de transmission : ESP32 -> broker -> application -> écran */
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem 0;
+}
+
+.flow-node {
+  display: flex;
+  width: 6.5rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgb(var(--sand-300));
+}
+
+.flow-node > span {
+  display: flex;
+  height: 3.25rem;
+  width: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  color: rgb(var(--azure-300));
+  background: rgb(95 152 238 / 0.14);
+  box-shadow: inset 0 0 0 1px rgb(95 152 238 / 0.35);
+}
+
+.flow-line {
+  display: none;
+  height: 2px;
+  width: 3.5rem;
+  background-image: linear-gradient(90deg, rgb(95 152 238 / 0.85) 50%, transparent 50%);
+  background-size: 14px 2px;
+  animation: dash-flow 0.9s linear infinite;
+}
+
+@media (min-width: 640px) { .flow-line { display: block; } }
+
+/* Scène animée : voiture qui se gare, barrière, capteurs */
+.parking-scene { width: 100%; height: auto; display: block; }
+
+.ps-road  { fill: rgb(var(--fg) / 0.06); }
+.ps-lane  { stroke: rgb(var(--fg) / 0.28); stroke-width: 3; stroke-dasharray: 26 26; animation: dash-road 2.6s linear infinite; }
+.ps-slot  { fill: rgb(var(--fg) / 0.04); stroke: rgb(var(--fg) / 0.3); stroke-width: 2.5; stroke-dasharray: 8 7; }
+.ps-label { fill: rgb(var(--sand-300)); font: 600 15px Figtree, system-ui, sans-serif; text-anchor: middle; }
+.ps-led-free { fill: rgb(var(--free)); }
+.ps-led-occ  { fill: rgb(var(--occupied)); }
+.ps-tint { fill: rgb(var(--occupied)); opacity: 0; }
+.ps-tint-occ { fill: rgb(var(--occupied)); opacity: 0.16; }
+
+.ps-wheel { fill: #1b2a41; }
+.ps-glass { fill: rgb(255 255 255 / 0.55); }
+.ps-light { fill: #ffe7a1; }
+
+.ps-car1 { animation: car-park 14s cubic-bezier(0.45, 0, 0.35, 1) infinite; }
+.ps-car3 { animation: car-pass 16s linear infinite; animation-delay: -6s; }
+.ps-arm  { animation: barrier 14s ease-in-out infinite; }
+.ps-led-2 { animation: led-2 14s step-end infinite; }
+.ps-tint-2 { animation: tint-2 14s ease-in-out infinite; }
+
+@keyframes car-park {
+  0%   { transform: translate(-100px, 212px) rotate(0deg); }
+  21%  { transform: translate(300px, 212px) rotate(0deg); }
+  29%  { transform: translate(370px, 160px) rotate(-90deg); }
+  37%  { transform: translate(370px, 78px) rotate(-90deg); }
+  68%  { transform: translate(370px, 78px) rotate(-90deg); }
+  76%  { transform: translate(370px, 160px) rotate(-90deg); }
+  84%  { transform: translate(450px, 212px) rotate(0deg); }
+  100% { transform: translate(1080px, 212px) rotate(0deg); }
+}
+
+@keyframes car-pass {
+  0%   { transform: translate(1080px, 262px) rotate(180deg); }
+  100% { transform: translate(-100px, 262px) rotate(180deg); }
+}
+
+@keyframes barrier {
+  0%, 2%   { transform: rotate(0deg); }
+  6%, 12%  { transform: rotate(-84deg); }
+  17%, 100% { transform: rotate(0deg); }
+}
+
+@keyframes led-2 {
+  0%   { fill: rgb(var(--free)); }
+  37%  { fill: rgb(var(--occupied)); }
+  76%  { fill: rgb(var(--free)); }
+}
+
+@keyframes tint-2 {
+  0%, 35%  { opacity: 0; }
+  40%, 70% { opacity: 0.16; }
+  76%, 100% { opacity: 0; }
+}
+
+/* Moins de mouvement : la scène reste figée, voiture garée */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pop, .animate-grow, .dot-live, .text-shimmer, .flow-line, .ps-lane { animation: none; }
+  .text-shimmer { background-position: 0 0; }
+  .ps-car1 { animation: none; transform: translate(370px, 78px) rotate(-90deg); }
+  .ps-car3 { animation: none; opacity: 0; }
+  .ps-arm { animation: none; }
+  .ps-led-2 { animation: none; fill: rgb(var(--occupied)); }
+  .ps-tint-2 { animation: none; opacity: 0.16; }
+  .btn-primary::after { display: none; }
+}
+
+/* Décalage d'apparition des cartes d'une même rangée */
+.reveal:nth-child(2) { --d: 0.12s; }
+.reveal:nth-child(3) { --d: 0.24s; }
+
+/* Le texte des boutons ne passe jamais à la ligne (barre de navigation sur mobile) */
+.btn-primary, .btn-secondary, .btn-ghost { white-space: nowrap; }

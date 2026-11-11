@@ -9,6 +9,7 @@
             if (saved === 'light' || saved === 'dark') theme = saved;
         } catch (e) {}
         root.setAttribute('data-theme', theme);
+        root.classList.add('js');
 
         document.addEventListener('click', function (event) {
             if (!event.target.closest('[data-theme-toggle]')) return;
