@@ -6,7 +6,7 @@ Chaîne complète : **ESP32 → Wi-Fi → Mosquitto (MQTT) → écouteur Laravel
 
 | Élément | Rôle | Comment le lancer |
 |---|---|---|
-| Mosquitto | broker MQTT (port 1883, mot de passe obligatoire) | voir ci-dessous |
+| Mosquitto | broker MQTT (port 1883, mot de passe obligatoire) | voir ci-dessous, ou `scriptsstart-parking.ps1` |
 | `php artisan serve` | site web (`http://127.0.0.1:8000`) | `scripts\start-parking.ps1` |
 | `php artisan mqttlisten` | reçoit les messages de l'ESP32 et met la base à jour | `scripts\start-parking.ps1` |
 
@@ -36,8 +36,10 @@ Les lance sans fenêtre et sans doublon.
 powershell -ExecutionPolicy Bypass -File scripts\install-autostart.ps1
 ```
 
-Désactive le service Mosquitto, crée la tâche « ESTM Mosquitto » (au démarrage de Windows) et la tâche
-« ESTM Parking Web » (site + écouteur à l'ouverture de session).
+Désactive le service Windows Mosquitto (il démarre sans la bonne configuration) et crée la tâche
+« ESTM Parking Web » : à l'ouverture de session Windows, elle lance Mosquitto (avec sa configuration),
+le site et l'écouteur MQTT, sans fenêtre. Mosquitto est lancé par ton compte et non par `SYSTEM`, car seul
+ton compte peut lire le fichier des mots de passe.
 
 ## Côté maquette
 
