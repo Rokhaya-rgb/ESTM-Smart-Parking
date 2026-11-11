@@ -4,8 +4,7 @@ namespace App\Services;
 
 use PhpMqtt\Client\MqttClient;
 use PhpMqtt\Client\ConnectionSettings;
-use App\Models\ParkingSlot;
-use App\Models\ParkingMetric;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class MqttService
@@ -68,42 +67,23 @@ class MqttService
     protected function handleMessage($topic, $message)
     {
         try {
-            // Signe de vie de la maquette (utilisé par le tableau de bord)
-            ParkingMetric::put('esp32_last_seen', now()->toIso8601String());
+            $forwardUrl = config('mqtt.forward_url');
 
-            // Nombre de véhicules compté par les capteurs d'entrée/sortie
-            if ($topic === 'parking/total') {
-                ParkingMetric::put('vehicle_count', max(0, (int) trim($message)));
+            if ($forwardUrl) {
+                // Mode VPS : le site (mutualisé) reste seul à écrire en base
+                $response = Http::withToken((string) config('esp32.ingest_key'))
+                    ->acceptJson()
+                    ->timeout(5)
+                    ->post($forwardUrl, ['topic' => $topic, 'message' => (string) $message]);
+
+                if ($response->failed()) {
+                    Log::warning("Relais {$topic} refusé par le site : HTTP " . $response->status());
+                }
                 return;
             }
 
-            $slotCode = substr($topic, strrpos($topic, '/') + 1);
-            $status = strtolower(trim($message)) === 'occupied' ? 'occupied' : 'available';
-
-            $slot = ParkingSlot::where('slot_code', $slotCode)
-                              ->where('has_sensor', true)
-                              ->first();
-
-            if ($slot) {
-                $before = $slot->status;
-                $slot->update([
-                    'status' => $status,
-                    'last_detection' => now()
-                ]);
-
-                // L'ESP32 republie l'état chaque seconde : on n'historise que les changements
-                if ($before !== $status) {
-                    $slot->slotEvents()->create([
-                        'status_before' => $before,
-                        'status_after' => $status,
-                        'detected_at' => now(),
-                        'source' => 'mqtt',
-                    ]);
-                    Log::info("Slot {$slotCode}: {$before} -> {$status}");
-                }
-            } else {
-                Log::warning("Slot {$slotCode} not found or does not have a sensor");
-            }
+            // Mode local : écriture directe en base
+            app(ParkingIngestService::class)->handle($topic, (string) $message);
         } catch (\Exception $e) {
             Log::error('Error handling MQTT message: ' . $e->getMessage());
         }

@@ -12,6 +12,9 @@ return [
     'topics' => [
         'parking/slot/#'  // Topic pour tous les messages des places de parking
     ],
+    // Mode VPS : si renseigné, l'écouteur n'écrit pas en base, il relaie chaque message
+    // en HTTPS vers le site (ex. https://parking.exemple.com/api/mqtt) avec INGEST_API_KEY.
+    'forward_url' => env('MQTT_FORWARD_URL', ''),
     'retain' => env('MQTT_RETAIN', false),
     'qos' => env('MQTT_QOS', 0),
 ];
