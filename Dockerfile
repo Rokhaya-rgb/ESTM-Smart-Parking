@@ -48,8 +48,9 @@ COPY docker/000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Commande de démarrage
 CMD mkdir -p /var/www/html/storage/framework/{sessions,views,cache} && \
-    touch /var/www/html/database/database.sqlite && \
-    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache && \
+    DB_FILE="${DB_DATABASE:-/var/www/html/database/database.sqlite}" && \
+    mkdir -p "$(dirname "$DB_FILE")" && touch "$DB_FILE" && \
+    chown -R www-data:www-data "$(dirname "$DB_FILE")" /var/www/html/storage /var/www/html/bootstrap/cache && \
     php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache && \

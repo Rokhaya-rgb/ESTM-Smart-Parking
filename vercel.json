@@ -28,7 +28,6 @@
         "APP_ENV": "production",
         "APP_DEBUG": "false",
         "DB_CONNECTION": "sqlite",
-        "APP_KEY": "base64:i19g2cA+F8QVpnHpRy6ltwwE6Lg2gftm6BfKZsaNt58=",
         "CACHE_DRIVER": "array",
         "SESSION_DRIVER": "array",
         "QUEUE_DRIVER": "sync"

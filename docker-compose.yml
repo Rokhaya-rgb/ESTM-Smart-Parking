@@ -1,0 +1,65 @@
+# Architecture de déploiement d'ESTM Smart Parking
+#
+#   ESP32 --MQTT:1883--> [mosquitto] <--abonnement-- [mqtt] --écrit--> base SQLite <--lit-- [web] --> navigateurs
+#
+# Trois services, une seule image applicative (Dockerfile) :
+#   web       site Laravel (Apache, port 8080 -> 10000 dans le conteneur)
+#   mqtt      écouteur : php artisan mqttlisten (met la base à jour à chaque message de l'ESP32)
+#   mosquitto broker MQTT (mot de passe obligatoire)
+#
+# Première mise en route :
+#   1. cp .env.example .env   puis renseigner APP_KEY (php artisan key:generate --show),
+#      MQTT_USERNAME et MQTT_PASSWORD. Ne jamais committer .env.
+#   2. Créer le fichier de mots de passe du broker :
+#      docker run --rm -v "${PWD}/docker/mosquitto:/mosquitto/config" eclipse-mosquitto:2 \
+#        mosquitto_passwd -c -b /mosquitto/config/passwd "$MQTT_USERNAME" "$MQTT_PASSWORD"
+#   3. docker compose up -d --build
+
+x-app-env: &app-env
+  APP_ENV: production
+  APP_DEBUG: "false"
+  DB_CONNECTION: sqlite
+  DB_DATABASE: /var/www/html/database/data/database.sqlite
+  LOG_CHANNEL: stderr
+  MQTT_HOST: mosquitto
+  MQTT_PORT: "1883"
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:10000"
+    env_file: .env
+    environment: *app-env
+    volumes:
+      - parking-data:/var/www/html/database/data
+    depends_on:
+      - mosquitto
+    restart: unless-stopped
+
+  mqtt:
+    build: .
+    # Remplace la commande du Dockerfile (pas de serveur web, pas de migration ici)
+    command: ["php", "artisan", "mqttlisten"]
+    env_file: .env
+    environment: *app-env
+    volumes:
+      - parking-data:/var/www/html/database/data
+    depends_on:
+      - mosquitto
+      - web
+    restart: unless-stopped
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./docker/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - ./docker/mosquitto/passwd:/mosquitto/config/passwd:ro
+      - mosquitto-data:/mosquitto/data
+    restart: unless-stopped
+
+volumes:
+  parking-data:
+  mosquitto-data:

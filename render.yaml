@@ -12,7 +12,7 @@ services:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        value: base64:i19g2cA+F8QVpnHpRy6ltwwE6Lg2gftm6BfKZsaNt58=
+        generateValue: true
       - key: APP_DEBUG
         value: false
       - key: DB_CONNECTION
