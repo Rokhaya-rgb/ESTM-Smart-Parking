@@ -42,15 +42,25 @@ class SimulateSlots extends Command
             ->whereNotIn('slot_code', config('parking.real_sensor_slots'))
             ->get();
 
-        foreach ($slots as $slot) {
+        // Le mélange reste équilibré : toujours entre ~30 % et ~70 % de places occupées parmi les simulées,
+        // pour que les places alternent réellement entre libre et occupée (jamais toutes pleines ni toutes vides).
+        $n = $slots->count();
+        $min = (int) floor($n * 0.3);
+        $max = (int) ceil($n * 0.7);
+        $occupied = $slots->where('status', 'occupied')->count();
+
+        foreach ($slots->shuffle() as $slot) {
+            $before = $slot->status;
+            $after = $before === 'occupied' ? 'available' : 'occupied';
+            $newOccupied = $occupied + ($after === 'occupied' ? 1 : -1);
+
             // Capteur « vivant » : il se signale à chaque passage, même sans changement
-            if (random_int(1, 100) > $chance) {
+            if (random_int(1, 100) > $chance || $newOccupied < $min || $newOccupied > $max) {
                 $slot->update(['last_detection' => now()]);
                 continue;
             }
 
-            $before = $slot->status;
-            $after = $before === 'occupied' ? 'available' : 'occupied';
+            $occupied = $newOccupied;
 
             $slot->update(['status' => $after, 'last_detection' => now()]);
             $slot->slotEvents()->create([
