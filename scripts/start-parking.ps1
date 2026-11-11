@@ -30,9 +30,3 @@ if (-not (Test-PhpRunning 'mqttlisten')) {
     Start-Process $php -ArgumentList 'artisan', 'mqttlisten' `
         -WorkingDirectory $root -WindowStyle Hidden
 }
-
-# 4) Simulation des places sans capteur réel (tourne en continu, un passage toutes les 10 s)
-if (-not (Test-PhpRunning 'parking:simulate')) {
-    Start-Process $php -ArgumentList 'artisan', 'parking:simulate', '--loop' `
-        -WorkingDirectory $root -WindowStyle Hidden
-}

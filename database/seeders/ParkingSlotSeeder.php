@@ -33,11 +33,11 @@ class ParkingSlotSeeder extends Seeder
         for ($i = 1; $i <= 10; $i++) {
             \App\Models\ParkingSlot::create([
                 'slot_code' => 'A-' . str_pad($i, 2, '0', STR_PAD_LEFT),
-                // A-01..A-04 : vrais capteurs (ESP32) ; A-05..A-10 : capteurs simulés (php artisan parking:simulate)
-                'status' => in_array($i, [6, 9]) ? 'occupied' : 'available',
+                // A-01..A-04 : vrais capteurs (ESP32). A-05..A-10 : sans capteur, état fixe (mélange libre / occupée).
+                'status' => in_array($i, [5, 7, 9]) ? 'occupied' : 'available',
                 'last_detection' => now(),
                 'is_reserved' => false,
-                'has_sensor' => true,
+                'has_sensor' => $i <= 4,
             ]);
         }
     }
