@@ -15,7 +15,7 @@ class ParkingSlotSeeder extends Seeder
         // Places réservées
         \App\Models\ParkingSlot::create([
             'slot_code' => 'DG-01',
-            'status' => 'available',
+            'status' => 'occupied',
             'last_detection' => now(),
             'is_reserved' => true,
             'reserved_for' => 'Directeur Général'
@@ -23,7 +23,7 @@ class ParkingSlotSeeder extends Seeder
 
         \App\Models\ParkingSlot::create([
             'slot_code' => 'DE-01',
-            'status' => 'available',
+            'status' => 'occupied',
             'last_detection' => now(),
             'is_reserved' => true,
             'reserved_for' => 'Directeur des Études'
