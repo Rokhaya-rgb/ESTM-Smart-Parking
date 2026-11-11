@@ -37,22 +37,23 @@
     --fg: 12 26 46;
     --page: 244 247 251;
     --page-alt: 232 238 247;
-    --sand-50: 12 26 46;
-    --sand-100: 30 45 68;
-    --sand-300: 71 85 105;
-    --sand-500: 100 116 139;
-    --azure-200: 30 77 160;
-    --azure-300: 37 99 200;
-    --free: 21 128 92;
-    --occupied: 190 62 50;
-    --warning: 161 98 7;
+    /* Textes plus sombres pour un contraste lisible sur fond clair (≥ 7:1 sur blanc) */
+    --sand-50: 9 18 36;
+    --sand-100: 15 23 42;
+    --sand-300: 38 50 72;
+    --sand-500: 71 85 105;
+    --azure-200: 23 52 120;
+    --azure-300: 30 64 175;
+    --free: 4 108 78;
+    --occupied: 185 28 28;
+    --warning: 146 64 14;
     --surface: 255 255 255;
-    --surface-alpha: 0.74;
-    --nav-alpha: 0.8;
-    --veil-top: 0.55;
-    --veil-mid: 0.68;
-    --veil-bottom: 0.92;
-    --veil-center: 0.82;
+    --surface-alpha: 0.93;
+    --nav-alpha: 0.92;
+    --veil-top: 0.72;
+    --veil-mid: 0.82;
+    --veil-bottom: 0.95;
+    --veil-center: 0.88;
     --field: 255 255 255;
     --shadow: 12 26 46;
   }
@@ -319,4 +320,40 @@ html { scrollbar-color: rgb(var(--fg) / 0.25) transparent; }
 
 @media (prefers-reduced-motion: reduce) {
   .animate-fade-up, .animate-float-glow { animation: none; }
+}
+
+/* Thème clair : bordures et champs plus marqués pour rester lisibles */
+:root[data-theme='light'] .form-input {
+  background-color: #fff;
+  border-color: rgb(var(--fg) / 0.3);
+}
+
+:root[data-theme='light'] .surface-panel {
+  border-color: rgb(var(--fg) / 0.14);
+}
+
+:root[data-theme='light'] .surface-card {
+  background-color: rgb(255 255 255 / 0.85);
+  border-color: rgb(var(--fg) / 0.14);
+}
+
+:root[data-theme='light'] .btn-secondary,
+:root[data-theme='light'] .theme-toggle {
+  background-color: rgb(255 255 255 / 0.85);
+  border-color: rgb(var(--fg) / 0.28);
+}
+
+:root[data-theme='light'] .btn-ghost {
+  background-color: rgb(255 255 255 / 0.85);
+  border-color: rgb(var(--fg) / 0.4);
+}
+
+:root[data-theme='light'] .hero-stat {
+  background-color: rgb(255 255 255 / 0.85);
+  border-color: rgb(var(--fg) / 0.2);
+}
+
+:root[data-theme='light'] .slot-chip {
+  background-color: #fff;
+  border-color: rgb(var(--fg) / 0.28);
 }
