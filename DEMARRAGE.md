@@ -6,7 +6,7 @@ Chaîne complète : **ESP32 → Wi-Fi → Mosquitto (MQTT) → écouteur Laravel
 
 | Élément | Rôle | Comment le lancer |
 |---|---|---|
-| Mosquitto | broker MQTT (port 1883, mot de passe obligatoire) | voir ci-dessous, ou `scriptsstart-parking.ps1` |
+| Mosquitto | broker MQTT (port 1883, mot de passe obligatoire) | voir ci-dessous, ou `scripts\start-parking.ps1` |
 | `php artisan serve` | site web (`http://127.0.0.1:8000`) | `scripts\start-parking.ps1` |
 | `php artisan mqttlisten` | reçoit les messages de l'ESP32 et met la base à jour | `scripts\start-parking.ps1` |
 
